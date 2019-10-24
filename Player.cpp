@@ -54,7 +54,7 @@ void Player::move() {
 
 	xPosition += xVelocity;
 
-	//these are a bunch of movement corrections and falling mechanics
+	//these are a bunch of collisions and falling mechanics
 	//which should be made into a separate function
 
 	if ((xPosition < 0) || (xPosition + width > 640) || ((yPosition + height > ground.y) && (xPosition < ground.x + ground.w))) {		
@@ -71,6 +71,12 @@ void Player::move() {
 
 		yVelocity = 0;
 	}
+
+	if (yPosition + yVelocity <= 0) {
+
+		yPosition = 0;
+		yVelocity = 0;
+	}
 }
 
 void Player::jump() {
@@ -83,6 +89,7 @@ void Player::jump() {
 		int yNextPosition = yPosition + height + yVelocity;
 
 		if ((yNextPosition >= ground.y) && (xPosition < ground.x + ground.w)) {
+
 			yPosition = ground.y - height;
 			yVelocity = 0;
 			jumpFlag = false;
